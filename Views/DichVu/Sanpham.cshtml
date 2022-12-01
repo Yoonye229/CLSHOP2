@@ -1,0 +1,280 @@
+﻿
+@model IEnumerable<CLEANSHOP.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h1>
+    Sản Phẩm @*<div class="a">
+        @Html.Action("LoaiSanPham", "DichVu")
+    </div>*@
+</h1>
+
+
+
+<h1 style="justify-content: center; display: flex;"> Sản phẩm phụ kiện giày giày</h1>
+@using (Html.BeginForm("Index", "DichVu", FormMethod.Get, new { @class = "form-inline" }))
+{
+
+    <div class="form-group" style="justify-content: center; display: flex; margin:50px">
+
+        <input type="Text" class="form-control col-md-10" value="@ViewBag.Keyword" name="searchString" placeholder="Nhập tên sản phẩm cần tìm">
+        <input type="submit" class="btn btn-danger" value="Tìm sản phẩm..." style="margin: 0 0 0 10px; margin-top: -5px">
+    </div>
+}
+
+<section class="features" id="features">
+
+    <div class="box-container">
+
+        @foreach (var item in Model)
+        {
+            @*<div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <h4 class="text-center"><span class="label label-info"></span></h4>
+                        <img src="@item.Image" class="img-responsive" style="height:200px">
+                        <div class="caption">
+                            <div class="row">
+                                <div class="text-center ">
+                                    <label style=" font-size : 20px"><strong>@item.ProductName</strong> </label>
+                                </div>
+                                <div class="col-md-6 col-xs-6 price">
+                                    <h3>
+                                        @if (item.Price == item.DisPrice)
+                                        {
+                                            <label style=" font-size: 15px;"> Giá : @item.DisPrice VND</label>
+                                        }
+                                        else
+                                        {
+
+                                            <h3 style="text-decoration-line: line-through; font-size: 20px;"><sup>Giá gốc @item.Price VND</sup></h3>
+                                            <label style="color: red; ">Còn : @item.DisPrice VND </label>
+                                        }
+
+
+
+                                    </h3>
+                                </div>
+                            </div>
+                            <p>@item.Text</p>
+                            <h4>
+                                <p>Số lượng :  @item.Amount </p>
+
+                            </h4>
+                            <div class="row">
+
+                                <div class="panel-footer clearfix">
+                                    <div class="col-md-6">
+                                        <a class="btn btn-primary btn-product" href="@Url.Action("Detail", "DichVu", new { @id = item.Id })">Chi tiết</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <div class="DatMua">
+                                            @if (item.Amount > 0)
+                                            {
+                                                <a class="btn btn-success"
+                                                   href="@Url.Action("ThemGioHang", "GioHang", new
+                                                             {
+                                                                      @id = item.Id,
+                                                                        @strURL = Request.Url.ToString()
+                                                                })">Thêm vào giỏ</a>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-block ">
+                                                    Tạm Hết Hàng
+                                                </a>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            <div class="box" style="height:660px;display:grid">
+                <img src="@item.Image" class="img-responsive" style="height:200px">
+                <h3>
+                    @item.ProductName
+                </h3>
+                <p>
+                    @if (item.Price == item.DisPrice)
+                    {
+                        <label style=" font-size: 15px; margin-top: 5px; font-style: oblique; "> Giá : @item.DisPrice VND</label>
+                    }
+                    else
+                    {
+
+                        <h3 style="text-decoration-line: line-through; font-size: 20px; font-style: oblique;"><sup>Giá gốc @item.Price VND</sup></h3>
+                        <label style="color: red; font-style: oblique; ">Còn : @item.DisPrice VND </label>
+                    }
+
+
+
+                </p>
+                <p style="font-style: oblique;">  @item.Text</p>
+
+                <p>Số lượng :  @item.Amount </p>
+                <div class="col-md-6">
+                    <a class="btn btn-product" href="@Url.Action("Detail", "DichVu", new { @id = item.Id })">Chi tiết</a>
+                    @if (item.Amount > 0)
+                    {
+                        <a class="btn" style="background : blue"
+                           href="@Url.Action("ThemGioHang", "GioHang", new
+                                                     {
+                                                              @id = item.Id,
+                                                                @strURL = Request.Url.ToString()
+                                                        })">Thêm vào giỏ</a>
+                    }
+                    else
+                    {
+                        <a class="btn" style="background: orange">
+                            Tạm Hết Hàng
+                        </a>
+                    }
+                </div>
+
+
+
+            </div>
+
+
+        }
+    </div>
+
+</section>
+
+
+<style>
+    .show-read-more .more-text {
+        display: none;
+    }
+</style>
+
+
+<style>
+    .btn-product {
+        width: 100%;
+    }
+    
+
+    #mau-nut a {
+        clear: both;
+        background-color: orange;
+        color: snow;
+    }
+
+
+
+    #slider {
+        padding-bottom: 30px;
+        border-bottom: 2px solid #000;
+        overflow: hidden;
+    }
+
+    .aspect-ratio-169 {
+        display: block;
+        position: relative;
+        margin-top: 20px;
+        padding-top: 46.25%;
+        transition: 0.3s;
+    }
+
+        .aspect-ratio-169 img {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            top: 0;
+            left: 0;
+        }
+
+    .dot-container {
+        position: relative;
+        height: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin-right: 12px;
+        cursor: pointer;
+    }
+
+        .dot.active {
+            background-color: #333;
+        }
+
+
+
+
+    body {
+        background: rgb(34,193,195);
+        background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(255,250,250,1) 34%);
+        padding-top: 100px;
+        padding-bottom: 20px;
+    }-->
+
+
+@*<!---------------------------------------------------------------------------------------------------*@
+
+
+
+
+
+</style>
+
+<!--<style type="text/css">
+    #mau-nut a {
+        clear: both;
+        background-color: orange;
+        color: snow;
+    }
+
+        #mau-nut a:hover {
+            background-color: darkcyan;
+            color: snow;
+        }
+
+    .box-container .col-md-6 .btn {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: .8rem 3rem;
+        border-radius: 5rem;
+        background: var(--gradient);
+        font-size: 1.7rem;
+        color: #fff;
+        cursor: pointer;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
+        transition: all .3s linear;
+    }
+
+        .box-container .col-md-6 .btn:hover {
+            transform: scale(1.1);
+        }
+    .box .img {
+        /* animation-name: phongto;
+            animation : phongto 2s forwards;*/
+       /* transform: translateY(-3.5rem);*/
+    }-->
+      @*@-webkit-keyframes phongto{
+             form{
+            transform : scale(1);
+            }
+            to{
+                transform : scale(1.2);
+            }
+}*@
+
+</style>
